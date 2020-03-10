@@ -1,8 +1,6 @@
 const userRepository = require('./user.repository');
 const passwordService = require('../../framework/services/password.service');
 
-const emailService = require('../../framework/services/email.service');
-
 const service = {
 
     validateCurrentPassword: async(idUser, password) => {

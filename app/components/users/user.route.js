@@ -8,6 +8,7 @@ const route = {
 
         router.route('/users/:idUser/password').put(
             authMiddleware.isLoggedIn,
+            userValidator.isLoggedUser,
             userValidator.changePassword,
             async(req, res, next) => {
                 try {
@@ -40,6 +41,7 @@ const route = {
 
         router.route('/users/:idUser/info').put(
             authMiddleware.isLoggedIn,
+            userValidator.isLoggedUser,
             userValidator.changeUserInfo,
             async(req, res, next) => {
                 try {

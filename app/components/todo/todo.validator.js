@@ -47,14 +47,15 @@ const validator = {
 
     ],
     update: [
-        check(['id', 'status']).trim().escape(),
-        param('id')
+        check(['idUser', 'status']).trim().escape(),
+
+        param('idUser')
         .exists({
             checkFalsy: true
         }).withMessage('El id es obligatorio')
         .isMongoId().withMessage('El id es incorrecto')
-        .custom((id) => {
-            return todoRepository.existsById(id)
+        .custom((idUser) => {
+            return todoRepository.existsById(idUser)
                 .then(todo => {
                     if (todo) {
 
@@ -77,15 +78,15 @@ const validator = {
         errorHandler.validation(validationResult)
     ],
     delete: [
-        sanitizeBody('*').trim().blacklist('\\<\\>\\?'),
+        check(['idUser']).trim().escape(),
 
-        param('id')
+        param('idUser')
         .exists({
             checkFalsy: true
         }).withMessage('El id es obligatorio')
         .isMongoId().withMessage('El id es incorrecto')
-        .custom((id) => {
-            return todoRepository.existsById(id)
+        .custom((idUser) => {
+            return todoRepository.existsById(idUser)
                 .then(todo => {
                     if (todo) {
 

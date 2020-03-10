@@ -3,59 +3,32 @@ const config = require('../../framework/config/env');
 
 const controller = {
 
-    getTodoList: (page) => new Promise((resolve, reject) => {
+    getAllPaginated: async(page, idUser) => {
 
         const limit = parseInt(config.app.todoPerPage);
         const offset = parseInt((page - 1) * limit);
 
-        todoRepository.getAllTodoPaginated(limit, offset)
-            .then(todoList => {
-                const totalTodo = parseInt(todoList.length);
-                let nextPage = 1;
+        const todos = await todoRepository.getAllPaginated(idUser, limit, offset)
 
-                if (parseInt(totalTodo + offset) <= parseInt(limit * page)) {
-                    nextPage = Math.floor(parseInt(totalTodo + offset) / parseInt(limit)) + 1;
-                }
+        const totalTodo = parseInt(todoList.length);
+        let nextPage = 1;
 
-                resolve({
-                    todoList: todoList,
-                    nextPage: nextPage
-                });
-            })
-            .catch(err => {
-                reject(err);
-            });
+        if (parseInt(totalTodo + offset) <= parseInt(limit * page)) {
+            nextPage = Math.floor(parseInt(totalTodo + offset) / parseInt(limit)) + 1;
+        }
 
-    }),
-    addTodo: (name) => new Promise((resolve, reject) => {
+        return { todos, nextPage }
 
-        const todoData = {
-            name: name,
-            status: 'pending'
-        };
+    },
+    add: (idUser, name) => {
 
-        todoRepository.insertTodo(todoData)
-            .then(todo => resolve(todo))
-            .catch(error => reject(error))
+        const todoData = { name, status: 'pending', user: idUser }
 
+        return todoRepository.insert(todoData)
+    },
+    edit: (id, status) => todoRepository.update(id, status),
 
-    }),
-    updateTodo: (id, status) => new Promise((resolve, reject) => {
-
-        todoRepository.updateTodo(id, status)
-            .then(todo => resolve(todo))
-            .catch(error => reject(error))
-
-
-    }),
-    deleteTodo: (id) => new Promise((resolve, reject) => {
-
-
-        todoRepository.deleteTodo(id)
-            .then(todo => resolve(todo))
-            .catch(error => reject(error))
-
-    })
+    deleteTodo: (id) => todoRepository.delete(id)
 
 };
 

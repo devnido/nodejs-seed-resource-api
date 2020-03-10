@@ -1,68 +1,18 @@
 const Todo = require('./todo.model');
 
 const repository = {
-    existsById: id => new Promise((resolve, reject) => {
-        Todo.findById(id)
-            .then(todo => {
-                if (todo) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            })
-            .catch(err => reject(err));
-    }),
-    existsByName: name => new Promise((resolve, reject) => {
-        Todo.find({
-            name: name
-        }).then(todo => {
 
-            if (todo) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+    existsById: id => Todo.exists({ _id: id }),
 
-        }).catch(err => reject(err));
-    }),
-    getAllTodoPaginated: (limit, offset) => new Promise((resolve, reject) => {
-        Todo.find()
-            .limit(limit)
-            .skip(offset)
-            .then(todoList => resolve(todoList))
-            .catch(error => reject(error))
-    }),
-    insertTodo: todoData => new Promise((resolve, reject) => {
-        new Todo(todoData)
-            .save()
-            .then(_todo => {
-                // quitar extras como __v o propiedades que no deben mostrarse
-                let todo = _todo.toObject();
+    existsByName: name => Todo.exists({ name }),
 
-                delete todo["__v"];
+    getAllPaginated: (idUser, limit, offset) => Todo.find({ user: idUser }).limit(limit).skip(offset),
 
-                resolve(todo);
-            })
-            .catch(error => reject(error));
-    }),
-    updateTodo: (id, status) => new Promise((resolve, reject) => {
-        Todo.findByIdAndUpdate(id, { status: status }, { new: true })
-            .then(_todo => {
-                // quitar extras como __v o propiedades que no deben mostrarse
-                let todo = _todo.toObject();
+    insert: ({ idUser, name, status }) => new Todo({ name, status, user: idUser }).save(),
 
-                delete todo["__v"];
+    update: (id, status) => Todo.findByIdAndUpdate(id, { status }, { new: true }),
 
-                resolve(todo);
-            })
-            .catch(error => reject(error));
-    }),
-
-    deleteTodo: (id) => new Promise((resolve, reject) => {
-        Todo.deleteOne({ _id: id })
-            .then(result => resolve(result))
-            .catch(error => reject(error));
-    }),
+    delete: id => Todo.deleteOne({ _id: id })
 
 }
 

@@ -3,140 +3,128 @@ const todoValidator = require("./todo.validator");
 const authMiddleware = require("../../framework/middlewares/auth.middleware");
 
 const route = {
-	init: router => {
-
-		//route /todo - GET
-		router.route('/todo').get(async (req, res, next) => {
-			try {
-
-				const {
-					page
-				} = req.query;
-
-				const todoList = await todoController.getTodoList(page);
-
-				const response = {
-					ok: true,
-					content: {
-						message: 'Todo List ',
-						todoList: todoList
-					}
-				}
-
-				res.status(200).json(response);
-
-			} catch (error) {
-
-				next({
-					error: error,
-					status: 500
-				});
-
-			}
-		});//end route /todo - GET
+    init: router => {
 
 
-		//route /todo - POST
-		router.route('/todo').post(async (req, res, next) => {
+        router.route('/todo').get(
+            todoValidator.getAllPaginated,
+            async(req, res, next) => {
+                try {
+                    const { page } = req.query;
+                    const todoList = await todoController.getAllPaginated(page);
+                    const response = {
+                        ok: true,
+                        content: {
+                            message: 'Todo List',
+                            todos: todoList
+                        }
+                    }
 
-			const {
-				name
-			} = req.body;
+                    res.status(200).json(response);
 
-			try {
+                } catch (error) {
 
-				const addedTodo = await todoController.addTodo(name);
+                    next({
+                        error: error,
+                        status: 500
+                    });
 
-				const response = {
-					ok: true,
-					content: {
-						message: 'Todo added successful',
-						todo: addedTodo
-					}
-				}
-
-				res.status(200).json(response);
-
-			} catch (error) {
-				next({
-					error: error,
-					status: 500
-				})
-			}
+                }
+            });
 
 
-		});//end route /todo - POST
+        router.route('/todo').post(
+            todoValidator.add,
+            async(req, res, next) => {
+
+                const { name } = req.body;
+
+                try {
+
+                    const addedTodo = await todoController.add(name);
+
+                    const response = {
+                        ok: true,
+                        content: {
+                            message: 'Todo added successful',
+                            todo: addedTodo
+                        }
+                    }
+
+                    res.status(200).json(response);
+
+                } catch (error) {
+                    next({
+                        error: error,
+                        status: 500
+                    })
+                }
+            });
 
 
-		//route /todo - PUT
-		router.route('/todo/:id').put(async (req, res, next) => {
 
-			const {
-				id
-			} = req.params;
+        router.route('/todo/:id').put(
+            todoValidator.update,
+            async(req, res, next) => {
 
-			const {
-				status
-			} = req.body;
+                const { id } = req.params;
 
-			try {
+                const { status } = req.body;
 
-				const updatedTodo = await todoController.updateTodo(id, status);
+                try {
 
-				const response = {
-					ok: true,
-					content: {
-						message: 'Todo updated successful',
-						todo: updatedTodo
-					}
-				}
+                    const updatedTodo = await todoController.update(id, status);
 
-				res.status(200).json(response);
+                    const response = {
+                        ok: true,
+                        content: {
+                            message: 'Todo updated successful',
+                            todo: updatedTodo
+                        }
+                    }
 
-			} catch (error) {
-				next({
-					error: error,
-					status: 500
-				})
-			}
+                    res.status(200).json(response);
 
+                } catch (error) {
+                    next({
+                        error: error,
+                        status: 500
+                    })
+                }
+            });
 
-		});//end route /todo - PUT
+        router.route('/todo/:id').delete(
+            todoValidator.delete,
+            async(req, res, next) => {
 
+                const { id } = req.params;
 
-		//route /todo - DELETE
-		router.route('/todo/:id').delete(async (req, res, next) => {
+                try {
 
-			const {
-				id
-			} = req.params;
+                    const deleted = await todoController.delete(id);
 
-			try {
+                    const response = {
+                        ok: true,
+                        content: {
+                            message: 'Todo deleted successful',
+                            status: deleted
+                        }
+                    }
 
-				const deleted = await todoController.deleteTodo(id);
+                    res.status(200).json(response);
 
-				const response = {
-					ok: true,
-					content: {
-						message: 'Todo deleted successful',
-						status: deleted
-					}
-				}
-
-				res.status(200).json(response);
-
-			} catch (error) {
-				next({
-					error: error,
-					status: 500
-				})
-			}
+                } catch (error) {
+                    next({
+                        error: error,
+                        status: 500
+                    })
+                }
 
 
-		});//end route /todo - PUT
+            });
 
 
-	}
+    }
 };
 
 module.exports = route;

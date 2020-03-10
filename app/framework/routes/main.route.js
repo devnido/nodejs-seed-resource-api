@@ -1,4 +1,5 @@
 const routeTodo = require('../../components/todo/todo.route');
+const routeUser = require('../../components/users/user.route');
 const config = require('../config/env');
 
 var route = {
@@ -6,7 +7,9 @@ var route = {
         var router = express.Router();
 
         /* routes list */
-        routeTodo.init(router);
+        routeTodo.init(router)
+        routeUser.init(router)
+
 
         /* prefix URL */
         const prefixApiUrl = config.app.urlApiPrefix; /* api/ */

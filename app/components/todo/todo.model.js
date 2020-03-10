@@ -11,6 +11,10 @@ const todo = new Schema({
         type: String,
         required: true,
         enum: ['pending', 'finalized']
+    },
+    user: {
+        type: Schema.ObjectId,
+        ref: 'user'
     }
 }, {
     timestamps: true

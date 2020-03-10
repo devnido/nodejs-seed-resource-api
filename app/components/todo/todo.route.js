@@ -7,11 +7,13 @@ const route = {
 
 
         router.route('/todo').get(
+            authMiddleware.isLoggedIn,
             todoValidator.getAllPaginated,
             async(req, res, next) => {
                 try {
+                    const idUser = req.uid;
                     const { page } = req.query;
-                    const todoList = await todoController.getAllPaginated(page);
+                    const todoList = await todoController.getAllPaginated(page, idUser);
                     const response = {
                         ok: true,
                         content: {
@@ -34,14 +36,17 @@ const route = {
 
 
         router.route('/todo').post(
+            authMiddleware.isLoggedIn,
             todoValidator.add,
             async(req, res, next) => {
+
+                const idUser = req.uid;
 
                 const { name } = req.body;
 
                 try {
 
-                    const addedTodo = await todoController.add(name);
+                    const addedTodo = await todoController.add(idUser, name);
 
                     const response = {
                         ok: true,
@@ -63,17 +68,18 @@ const route = {
 
 
 
-        router.route('/todo/:id').put(
+        router.route('/todo/:idTodo').put(
+            authMiddleware.isLoggedIn,
             todoValidator.update,
             async(req, res, next) => {
 
-                const { id } = req.params;
+                const { idTodo } = req.params;
 
                 const { status } = req.body;
 
                 try {
 
-                    const updatedTodo = await todoController.update(id, status);
+                    const updatedTodo = await todoController.edit(idTodo, status);
 
                     const response = {
                         ok: true,
@@ -93,15 +99,16 @@ const route = {
                 }
             });
 
-        router.route('/todo/:id').delete(
+        router.route('/todo/:idTodo').delete(
+            authMiddleware.isLoggedIn,
             todoValidator.delete,
             async(req, res, next) => {
 
-                const { id } = req.params;
+                const { idTodo } = req.params;
 
                 try {
 
-                    const deleted = await todoController.delete(id);
+                    const deleted = await todoController.delete(idTodo);
 
                     const response = {
                         ok: true,

@@ -10,25 +10,25 @@ const controller = {
 
         const todos = await todoRepository.getAllPaginated(idUser, limit, offset)
 
-        const totalTodo = parseInt(todoList.length);
+        const total = parseInt(todos.length);
         let nextPage = 1;
 
-        if (parseInt(totalTodo + offset) <= parseInt(limit * page)) {
-            nextPage = Math.floor(parseInt(totalTodo + offset) / parseInt(limit)) + 1;
+        if (parseInt(total + offset) <= parseInt(limit * page)) {
+            nextPage = Math.floor(parseInt(total + offset) / parseInt(limit)) + 1;
         }
 
-        return { todos, nextPage }
+        return { todos, nextPage, total }
 
     },
     add: (idUser, name) => {
 
-        const todoData = { name, status: 'pending', user: idUser }
+        const todoData = { idUser, name, status: 'pending' }
 
         return todoRepository.insert(todoData)
     },
     edit: (id, status) => todoRepository.update(id, status),
 
-    deleteTodo: (id) => todoRepository.delete(id)
+    delete: (id) => todoRepository.delete(id)
 
 };
 

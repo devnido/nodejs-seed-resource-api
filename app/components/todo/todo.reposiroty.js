@@ -8,7 +8,7 @@ const repository = {
 
     getAllPaginated: (idUser, limit, offset) => Todo.find({ user: idUser }).limit(limit).skip(offset),
 
-    insert: ({ idUser, name, status }) => new Todo({ name, status, user: idUser }).save(),
+    insert: ({ name, status, idUser }) => new Todo({ name, status, user: idUser }).save(),
 
     update: (id, status) => Todo.findByIdAndUpdate(id, { status }, { new: true }),
 

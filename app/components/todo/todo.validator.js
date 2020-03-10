@@ -22,6 +22,7 @@ const validator = {
     ],
     add: [
         check(['name']).trim().escape(),
+
         body('name')
         .exists({
             checkFalsy: true
@@ -47,15 +48,15 @@ const validator = {
 
     ],
     update: [
-        check(['idUser', 'status']).trim().escape(),
+        check(['idTodo', 'status']).trim().escape(),
 
-        param('idUser')
+        param('idTodo')
         .exists({
             checkFalsy: true
         }).withMessage('El id es obligatorio')
         .isMongoId().withMessage('El id es incorrecto')
-        .custom((idUser) => {
-            return todoRepository.existsById(idUser)
+        .custom((idTodo) => {
+            return todoRepository.existsById(idTodo)
                 .then(todo => {
                     if (todo) {
 
@@ -78,15 +79,15 @@ const validator = {
         errorHandler.validation(validationResult)
     ],
     delete: [
-        check(['idUser']).trim().escape(),
+        check(['idTodo']).trim().escape(),
 
-        param('idUser')
+        param('idTodo')
         .exists({
             checkFalsy: true
         }).withMessage('El id es obligatorio')
         .isMongoId().withMessage('El id es incorrecto')
-        .custom((idUser) => {
-            return todoRepository.existsById(idUser)
+        .custom((idTodo) => {
+            return todoRepository.existsById(idTodo)
                 .then(todo => {
                     if (todo) {
 

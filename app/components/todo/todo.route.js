@@ -35,7 +35,7 @@ const route = {
                     });
 
                 }
-            });
+            })
 
 
         router.route('/todo').post(
@@ -67,7 +67,7 @@ const route = {
                         status: 500
                     })
                 }
-            });
+            })
 
         router.route('/todo/:idTodo').get(
             authMiddleware.isLoggedIn,
@@ -76,11 +76,15 @@ const route = {
 
                 const { idTodo } = req.params;
 
+
+
                 const idUser = req.uid;
 
                 try {
 
                     const todo = await todoController.get(idUser, idTodo);
+
+
 
                     console.log('todo', todo);
 
@@ -101,7 +105,7 @@ const route = {
                         status: 500
                     })
                 }
-            });
+            })
 
 
         router.route('/todo/:q/search').get(
@@ -113,7 +117,9 @@ const route = {
 
                     const { q } = req.params;
 
-                    const { todos, total } = await todoController.getByTerm(q);
+                    const idUser = req.uid;
+
+                    const { todos, total } = await todoController.getByTerm(q, idUser);
 
                     const response = {
                         ok: true,
@@ -142,9 +148,6 @@ const route = {
             })
 
 
-
-
-
         router.route('/todo/:idTodo').put(
             authMiddleware.isLoggedIn,
             todoValidator.update,
@@ -154,9 +157,11 @@ const route = {
 
                 const { name, status } = req.body;
 
+                const idUser = req.uid;
+
                 try {
 
-                    const updatedTodo = await todoController.edit(idTodo, name, status);
+                    const updatedTodo = await todoController.edit(idTodo, name, status, idUser);
 
                     const response = {
                         ok: true,
@@ -174,7 +179,7 @@ const route = {
                         status: 500
                     })
                 }
-            });
+            })
 
         router.route('/todo/:idTodo').delete(
             authMiddleware.isLoggedIn,
@@ -205,7 +210,7 @@ const route = {
                 }
 
 
-            });
+            })
 
 
     }

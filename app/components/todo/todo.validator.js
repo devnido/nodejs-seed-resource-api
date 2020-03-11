@@ -7,7 +7,7 @@ const validator = {
 
     getAllPaginated: [
 
-        check('page').trim().escape().toInt(),
+        check(['page']).trim().escape().toInt(),
 
         query('page')
         .exists({

@@ -10,11 +10,13 @@ const controller = {
 
         const todos = await todoRepository.getAllPaginated(idUser, limit, offset)
 
-        const total = parseInt(todos.length);
+        const total = await todoRepository.getTotal(idUser);
+
+        const totalPerPage = parseInt(todos.length);
         let nextPage = 1;
 
-        if (parseInt(total + offset) <= parseInt(limit * page)) {
-            nextPage = Math.floor(parseInt(total + offset) / parseInt(limit)) + 1;
+        if (parseInt(totalPerPage + offset) <= parseInt(limit * page)) {
+            nextPage = Math.floor(parseInt(totalPerPage + offset) / parseInt(limit)) + 1;
         }
 
         return { todos, nextPage, total }
@@ -22,9 +24,11 @@ const controller = {
     },
     get: (idUser, idTodo) => todoRepository.getById(idUser, idTodo),
 
-    getByTerm: async(q) => {
+    getByTerm: async(q, idUser) => {
 
-        const todos = await todoRepository.getByTerm(q)
+        const regex = new RegExp(q, 'i');
+
+        const todos = await todoRepository.getByRegex(regex, idUser)
 
         const total = todos.length;
 
@@ -33,11 +37,11 @@ const controller = {
 
     add: (idUser, name) => {
 
-        const todoData = { idUser, name, status: 'pendiente' }
+        const todoData = { name, status: 'pendiente', user: idUser }
 
         return todoRepository.insert(todoData)
     },
-    edit: (id, name, status) => todoRepository.update(id, name, status),
+    edit: (id, name, status, idUser) => todoRepository.update(id, name, status, idUser),
 
     delete: (id) => todoRepository.delete(id)
 

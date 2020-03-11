@@ -20,13 +20,24 @@ const controller = {
         return { todos, nextPage, total }
 
     },
+    get: (idUser, idTodo) => todoRepository.getById(idUser, idTodo),
+
+    getByTerm: async(q) => {
+
+        const todos = await todoRepository.getByTerm(q)
+
+        const total = todos.length;
+
+        return { total, todos }
+    },
+
     add: (idUser, name) => {
 
-        const todoData = { idUser, name, status: 'pending' }
+        const todoData = { idUser, name, status: 'pendiente' }
 
         return todoRepository.insert(todoData)
     },
-    edit: (id, status) => todoRepository.update(id, status),
+    edit: (id, name, status) => todoRepository.update(id, name, status),
 
     delete: (id) => todoRepository.delete(id)
 

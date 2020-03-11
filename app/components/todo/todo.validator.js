@@ -20,6 +20,31 @@ const validator = {
 
         errorHandler.validation(validationResult)
     ],
+    get: [
+        check(['idTodo']).trim().escape(),
+
+        param('idTodo')
+        .exists({
+            checkFalsy: true
+        }).withMessage('El id es obligatorio')
+        .isMongoId().withMessage('El id es incorrecto')
+        .custom((idTodo) => {
+            return todoRepository.existsById(idTodo)
+                .then(todo => {
+                    if (todo) {
+
+                    } else {
+                        return Promise.reject('El id no existe')
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    throw new Error('El id no existe')
+                })
+        }).withMessage('El id no existe'),
+
+        errorHandler.validation(validationResult)
+    ],
     add: [
         check(['name']).trim().escape(),
 
@@ -47,6 +72,19 @@ const validator = {
         errorHandler.validation(validationResult)
 
     ],
+    search: [
+
+        check(['q']).trim().escape(),
+
+        // ********* //
+        //  user id  //
+        // ********* //
+        param('q')
+        .exists({
+            checkFalsy: true
+        }).withMessage('La palabra a buscar es obligatoria'),
+        errorHandler.validation(validationResult)
+    ],
     update: [
         check(['idTodo', 'status']).trim().escape(),
 
@@ -70,11 +108,32 @@ const validator = {
                 })
         }).withMessage('El id no existe'),
 
+        body('name')
+        .exists({
+            checkFalsy: true
+        }).withMessage('El nombre es obligatorio')
+        .isLength({
+            min: 2,
+            max: 50
+        }).withMessage('Debe tener entre 2 y 50 caracteres')
+        .custom((name, { req }) => {
+            return todoRepository.existsByNameAndAnotherId(req.params.idTodo, name)
+                .then(todo => {
+                    if (todo) {
+                        return Promise.reject('El nombre ya existe')
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    throw new Error('El nombre ya existe')
+                })
+        }).withMessage('El nombre ya existe'),
+
         body('status')
         .exists({
             checkFalsy: true
         }).withMessage('El estado es obligatorio')
-        .isIn(['pending', 'finalized']).withMessage('Status is not valid'),
+        .isIn(['pendiente', 'realizado']).withMessage('Status is not valid'),
 
         errorHandler.validation(validationResult)
     ],

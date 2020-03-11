@@ -1,198 +1,177 @@
 {
-	"info": {
-		"_postman_id": "320b02c8-ecd8-4988-a9ca-6c2472ed4709",
-		"name": "seed-resource-api nodejs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "/todo paginated",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:5000/api/v1/todo?page=1",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"todo"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/todo",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Crear documentación de la API\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/api/v1/todo",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"todo"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/todo",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"status\": \"finalized\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/api/v1/todo/:idTodo",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"todo",
-						":idTodo"
-					],
-					"variable": [
-						{
-							"key": "idTodo",
-							"value": "5e6739178125b410909dfdd4"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/todo",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/api/v1/todo/:idTodo",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"todo",
-						":idTodo"
-					],
-					"variable": [
-						{
-							"key": "idTodo",
-							"value": "5e6739178125b410909dfdd4"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"protocolProfileBehavior": {}
+    "info": {
+        "_postman_id": "320b02c8-ecd8-4988-a9ca-6c2472ed4709",
+        "name": "seed-resource-api nodejs",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [{
+            "name": "/todo paginated",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [{
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
+                        "type": "string"
+                    }]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:5000/api/v1/todo?page=1",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "v1",
+                        "todo"
+                    ],
+                    "query": [{
+                        "key": "page",
+                        "value": "1"
+                    }]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "/todo",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [{
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
+                        "type": "string"
+                    }]
+                },
+                "method": "POST",
+                "header": [{
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Crear documentación de la API\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "localhost:5000/api/v1/todo",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "v1",
+                        "todo"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "/todo",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [{
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
+                        "type": "string"
+                    }]
+                },
+                "method": "PUT",
+                "header": [{
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"status\": \"realizado\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "localhost:5000/api/v1/todo/:idTodo",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "v1",
+                        "todo",
+                        ":idTodo"
+                    ],
+                    "variable": [{
+                        "key": "idTodo",
+                        "value": "5e6739178125b410909dfdd4"
+                    }]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "/todo",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [{
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTY0YjUyNmIyMjIwYjRiMjRiZGVlZGIiLCJleHAiOjE1ODY1MDA1ODMzOTUsImlhdCI6MTU4MzgyMjE4M30.CG8kBOEgFdHl1Nu8ZxMY9-6agxHN96ecTR_EG6vTuuk",
+                        "type": "string"
+                    }]
+                },
+                "method": "DELETE",
+                "header": [{
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "localhost:5000/api/v1/todo/:idTodo",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "v1",
+                        "todo",
+                        ":idTodo"
+                    ],
+                    "variable": [{
+                        "key": "idTodo",
+                        "value": "5e6739178125b410909dfdd4"
+                    }]
+                }
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
 }

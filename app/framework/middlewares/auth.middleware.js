@@ -1,7 +1,7 @@
 const jwtService = require('../services/jsonwebtoken.service');
 
 const middleware = {
-    isLoggedIn: async (req, res, next) => {
+    isLoggedIn: async(req, res, next) => {
 
         try {
 
@@ -14,14 +14,14 @@ const middleware = {
             next();
 
         } catch (error) {
-            if (err.name = 'TokenExpiredError') {
+            if (error.name = 'TokenExpiredError') {
                 next({
-                    error: err,
+                    error: error,
                     status: 440
                 })
             } else {
                 next({
-                    error: err,
+                    error: error,
                     status: 401
                 })
             }

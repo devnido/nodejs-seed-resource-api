@@ -10,7 +10,7 @@ const todo = new Schema({
     status: {
         type: String,
         required: true,
-        enum: ['pending', 'finalized']
+        enum: ['pendiente', 'realizado']
     },
     user: {
         type: Schema.ObjectId,

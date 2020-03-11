@@ -112,10 +112,10 @@ const validator = {
     isLoggedUser: [
         check('idUser').trim().escape(),
 
-        body('idUser')
+        param('idUser')
         .custom((value, { req }) => {
             if (value !== req.uid) {
-                // trow error if passwords do not match
+
                 throw new Error("El usuario registrado no es el mismo que intentas modificar");
             } else {
                 return value;

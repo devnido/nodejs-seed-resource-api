@@ -5,7 +5,6 @@ const authMiddleware = require("../../framework/middlewares/auth.middleware");
 const route = {
     init: router => {
 
-
         router.route('/todo').get(
             authMiddleware.isLoggedIn,
             todoValidator.getAllPaginated,
@@ -36,7 +35,6 @@ const route = {
 
                 }
             })
-
 
         router.route('/todo').post(
             authMiddleware.isLoggedIn,
@@ -107,7 +105,6 @@ const route = {
                 }
             })
 
-
         router.route('/todo/:q/search').get(
             authMiddleware.isLoggedIn,
             todoValidator.search,
@@ -146,7 +143,6 @@ const route = {
                 }
 
             })
-
 
         router.route('/todo/:idTodo').put(
             authMiddleware.isLoggedIn,
@@ -211,7 +207,6 @@ const route = {
 
 
             })
-
 
     }
 };

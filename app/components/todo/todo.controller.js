@@ -1,16 +1,16 @@
-const todoRepository = require('./todo.reposiroty');
-const config = require('../../framework/config/env');
+const { getAllPaginated, getTotal, getById, getByRegex, insert, update } = require('./todo.reposiroty');
+const { app } = require('../../framework/config/env');
 
 const controller = {
 
     getAllPaginated: async(page, idUser) => {
 
-        const limit = parseInt(config.app.todoPerPage);
+        const limit = parseInt(app.todoPerPage);
         const offset = parseInt((page - 1) * limit);
 
-        const todos = await todoRepository.getAllPaginated(idUser, limit, offset)
+        const todos = await getAllPaginated(idUser, limit, offset)
 
-        const total = await todoRepository.getTotal(idUser);
+        const total = await getTotal(idUser);
 
         const totalPerPage = parseInt(todos.length);
         let nextPage = 1;
@@ -22,13 +22,13 @@ const controller = {
         return { todos, nextPage, total }
 
     },
-    get: (idUser, idTodo) => todoRepository.getById(idUser, idTodo),
+    get: (idUser, idTodo) => getById(idUser, idTodo),
 
     getByTerm: async(q, idUser) => {
 
         const regex = new RegExp(q, 'i');
 
-        const todos = await todoRepository.getByRegex(regex, idUser)
+        const todos = await getByRegex(regex, idUser)
 
         const total = todos.length;
 
@@ -39,11 +39,11 @@ const controller = {
 
         const todoData = { name, status: 'pendiente', user: idUser }
 
-        return todoRepository.insert(todoData)
+        return insert(todoData)
     },
-    edit: (id, name, status, idUser) => todoRepository.update(id, name, status, idUser),
+    edit: (id, name, status, idUser) => update(id, name, status, idUser),
 
-    delete: (id) => todoRepository.delete(id)
+    delete: (id) => delete(id)
 
 };
 

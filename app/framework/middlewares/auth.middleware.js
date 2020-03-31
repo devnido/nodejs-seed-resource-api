@@ -1,17 +1,15 @@
-const jwtService = require('../services/jsonwebtoken.service');
-
-const middleware = {
+const middleware = ({ jwtService }) => ({
     isLoggedIn: async(req, res, next) => {
 
         try {
 
-            const bearer = req.headers['authorization'];
+            const bearer = req.headers['authorization']
 
-            const { idUser } = await jwtService.verifyAndDecode(bearer);
+            const { idUser } = await jwtService.verifyAndDecode(bearer)
 
-            req.uid = idUser;
+            req.uid = idUser
 
-            next();
+            next()
 
         } catch (error) {
             if (error.name = 'TokenExpiredError') {
@@ -28,6 +26,6 @@ const middleware = {
         }
 
     }
-}
+})
 
-module.exports = middleware;
+module.exports = middleware

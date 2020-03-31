@@ -1,6 +1,4 @@
-const User = require('./user.model');
-
-const repository = {
+const repository = ({ User }) => ({
 
     existsById: (id) => User.exists({ _id: id }),
 
@@ -10,7 +8,6 @@ const repository = {
 
     setNewInfo: (idUser, name) => User.findOneAndUpdate({ _id: idUser }, { name: name }, { new: true })
 
+})
 
-}
-
-module.exports = repository;
+module.exports = repository

@@ -1,7 +1,4 @@
-const userRepository = require('./user.repository');
-const passwordService = require('../../framework/services/password.service');
-
-const service = {
+const service = ({ userRepository, passwordService }) => ({
 
     validateCurrentPassword: async(idUser, password) => {
 
@@ -25,7 +22,7 @@ const service = {
 
         let user = await userRepository.setNewInfo(idUser, name)
 
-        user = user.toObject();
+        user = user.toObject()
 
         delete user.password
 
@@ -34,6 +31,6 @@ const service = {
     }
 
 
-}
+})
 
-module.exports = service;
+module.exports = service

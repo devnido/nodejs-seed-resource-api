@@ -12,10 +12,10 @@ const error = {
             }) => {
                 // Build your resulting errors however you want! String, object, whatever - it works!
 
-                return { location, param, msg, value };
-            };
+                return { location, param, msg, value }
+            }
 
-            const errors = validationResult(req).formatWith(errorFormatter);
+            const errors = validationResult(req).formatWith(errorFormatter)
             if (!errors.isEmpty()) {
                 next({
                     error: errors.array({
@@ -29,7 +29,7 @@ const error = {
 
         }
 
-        return validation;
+        return validation
     },
     bodyParser: (err, req, res, next) => {
 
@@ -40,31 +40,31 @@ const error = {
                 status: 400
             })
         } else {
-            next();
+            next()
         }
 
     },
     log: (err, req, res, next) => {
-        // const error = err.error;
-        // const status = err.status;
+        // const error = err.error
+        // const status = err.status
         //loguear error
         // if (process.env.NODE_ENV == 'development') {
-        console.log(err);
-        //}
+        console.log(err)
+            //}
 
         next(err)
     },
     handler: (err, req, res, next) => {
 
-        const error = err.error;
-        let status = err.status ? err.status : 500; //500 por defecto
+        const error = err.error
+        let status = err.status ? err.status : 500 //500 por defecto
 
-        const response = {};
+        const response = {}
 
         if (status === 401) {
 
-            status = 401;
-            response.ok = false;
+            status = 401
+            response.ok = false
             response.content = {
                 error: {
                     type: 'Unauthorized',
@@ -74,8 +74,8 @@ const error = {
 
         } else if (status === 440) {
 
-            status = 401;
-            response.ok = false;
+            status = 401
+            response.ok = false
             response.content = {
                 error: {
                     type: 'Session Expired',
@@ -85,8 +85,8 @@ const error = {
 
         } else if (status === 422) {
 
-            status = 422;
-            response.ok = false;
+            status = 422
+            response.ok = false
             response.content = {
                 error: {
                     type: 'Unprocessable Entity',
@@ -97,8 +97,8 @@ const error = {
             }
 
         } else if (status === 400) {
-            status = 400;
-            response.ok = false;
+            status = 400
+            response.ok = false
             response.content = {
                 error: {
                     type: 'Bad Request',
@@ -108,7 +108,7 @@ const error = {
             }
         } else {
             //para cualquier otro status asume 500 por defecto
-            response.ok = false;
+            response.ok = false
             response.content = {
                 error: {
                     type: 'Internal Server Error',
@@ -118,14 +118,14 @@ const error = {
         }
 
         res.status(status)
-            .json(response);
+            .json(response)
     },
     notFound: (req, res) => {
 
-        const status = 404;
-        const response = {};
+        const status = 404
+        const response = {}
 
-        response.ok = false;
+        response.ok = false
         response.content = {
             error: {
                 type: 'Not Found',
@@ -133,7 +133,7 @@ const error = {
             }
         }
         res.status(status)
-            .json(response);
+            .json(response)
     }
 }
 

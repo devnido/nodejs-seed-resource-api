@@ -1,8 +1,4 @@
-const todoController = require("./todo.controller");
-const todoValidator = require("./todo.validator");
-const authMiddleware = require("../../framework/middlewares/auth.middleware");
-
-const route = {
+const route = ({ todoController, todoValidator, authMiddleware }) => ({
     init: router => {
 
         router.route('/todo').get(
@@ -10,9 +6,9 @@ const route = {
             todoValidator.getAllPaginated,
             async(req, res, next) => {
                 try {
-                    const idUser = req.uid;
-                    const { page } = req.query;
-                    const { todos, nextPage, total } = await todoController.getAllPaginated(page, idUser);
+                    const idUser = req.uid
+                    const { page } = req.query
+                    const { todos, nextPage, total } = await todoController.getAllPaginated(page, idUser)
                     const response = {
                         ok: true,
                         content: {
@@ -24,14 +20,14 @@ const route = {
                     }
 
 
-                    res.status(200).json(response);
+                    res.status(200).json(response)
 
                 } catch (error) {
 
                     next({
                         error: error,
                         status: 500
-                    });
+                    })
 
                 }
             })
@@ -41,13 +37,13 @@ const route = {
             todoValidator.add,
             async(req, res, next) => {
 
-                const idUser = req.uid;
+                const idUser = req.uid
 
-                const { name } = req.body;
+                const { name } = req.body
 
                 try {
 
-                    const addedTodo = await todoController.add(idUser, name);
+                    const addedTodo = await todoController.add(idUser, name)
 
                     const response = {
                         ok: true,
@@ -57,7 +53,7 @@ const route = {
                         }
                     }
 
-                    res.status(200).json(response);
+                    res.status(200).json(response)
 
                 } catch (error) {
                     next({
@@ -72,20 +68,13 @@ const route = {
             todoValidator.get,
             async(req, res, next) => {
 
-                const { idTodo } = req.params;
+                const { idTodo } = req.params
 
-
-
-                const idUser = req.uid;
+                const idUser = req.uid
 
                 try {
 
-                    const todo = await todoController.get(idUser, idTodo);
-
-
-
-                    console.log('todo', todo);
-
+                    const todo = await todoController.get(idUser, idTodo)
 
                     const response = {
                         ok: true,
@@ -95,7 +84,7 @@ const route = {
                         }
                     }
 
-                    res.status(200).json(response);
+                    res.status(200).json(response)
 
                 } catch (error) {
                     next({
@@ -112,11 +101,11 @@ const route = {
 
                 try {
 
-                    const { q } = req.params;
+                    const { q } = req.params
 
-                    const idUser = req.uid;
+                    const idUser = req.uid
 
-                    const { todos, total } = await todoController.getByTerm(q, idUser);
+                    const { todos, total } = await todoController.getByTerm(q, idUser)
 
                     const response = {
                         ok: true,
@@ -129,17 +118,17 @@ const route = {
 
                     if (todos && total) {
 
-                        res.status(200).json(response);
+                        res.status(200).json(response)
 
                     } else {
-                        response.content.agencies = [];
-                        response.content.total = 0;
-                        res.status(200).json(response);
+                        response.content.agencies = []
+                        response.content.total = 0
+                        res.status(200).json(response)
                     }
 
 
                 } catch (error) {
-                    next(error);
+                    next(error)
                 }
 
             })
@@ -149,15 +138,15 @@ const route = {
             todoValidator.update,
             async(req, res, next) => {
 
-                const { idTodo } = req.params;
+                const { idTodo } = req.params
 
-                const { name, status } = req.body;
+                const { name, status } = req.body
 
-                const idUser = req.uid;
+                const idUser = req.uid
 
                 try {
 
-                    const updatedTodo = await todoController.edit(idTodo, name, status, idUser);
+                    const updatedTodo = await todoController.edit(idTodo, name, status, idUser)
 
                     const response = {
                         ok: true,
@@ -167,7 +156,7 @@ const route = {
                         }
                     }
 
-                    res.status(200).json(response);
+                    res.status(200).json(response)
 
                 } catch (error) {
                     next({
@@ -182,11 +171,11 @@ const route = {
             todoValidator.delete,
             async(req, res, next) => {
 
-                const { idTodo } = req.params;
+                const { idTodo } = req.params
 
                 try {
 
-                    const deleted = await todoController.delete(idTodo);
+                    const deleted = await todoController.delete(idTodo)
 
                     const response = {
                         ok: true,
@@ -196,7 +185,7 @@ const route = {
                         }
                     }
 
-                    res.status(200).json(response);
+                    res.status(200).json(response)
 
                 } catch (error) {
                     next({
@@ -209,6 +198,6 @@ const route = {
             })
 
     }
-};
+})
 
-module.exports = route;
+module.exports = route

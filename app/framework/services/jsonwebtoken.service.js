@@ -1,14 +1,13 @@
-const jsonwebtoken = require('jsonwebtoken');
-const config = require('../config/env');
+const jsonwebtoken = require('jsonwebtoken')
 
-const service = {
+const service = ({ config }) => ({
     verifyAndDecode: (bearer) => new Promise((resolve, reject) => {
 
-        const token = bearer.split(' ')[1];
+        const token = bearer.split(' ')[1]
 
-        const secret = config.app.secretApi;
+        const secret = config.app.secretApi
 
-        const decoded = jsonwebtoken.verify(token, secret);
+        const decoded = jsonwebtoken.verify(token, secret)
 
         if (decoded) {
 
@@ -20,6 +19,6 @@ const service = {
 
         }
     })
-};
+})
 
 module.exports = service;

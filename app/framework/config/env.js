@@ -32,6 +32,6 @@ const config = {
         user: process.env.EMAIL_AUTH,
         pass: process.env.EMAIL_AUTH_PASS,
     }
-};
+}
 
-module.exports = config;
+module.exports = config

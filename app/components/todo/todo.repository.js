@@ -1,6 +1,4 @@
-const Todo = require('./todo.model');
-
-const repository = {
+const repository = ({ Todo }) => ({
 
     existsById: id => Todo.exists({ _id: id }),
 
@@ -8,7 +6,7 @@ const repository = {
 
     existsByNameAndAnotherId: (idTodo, name) => Todo.exists({ name, _id: { $ne: idTodo } }),
 
-    getTotal: user => Todo.count({ user }),
+    getTotal: user => Todo.countDocuments({ user }),
 
     getAllPaginated: (user, limit, offset) => Todo.find({ user }).sort({ createdAt: 'desc' }).limit(limit).skip(offset),
 
@@ -22,6 +20,6 @@ const repository = {
 
     delete: id => Todo.deleteOne({ _id: id })
 
-}
+})
 
-module.exports = repository;
+module.exports = repository

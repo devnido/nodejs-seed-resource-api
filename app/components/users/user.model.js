@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
     email: {
@@ -7,7 +7,7 @@ const Schema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: function(val) {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val);
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)
             },
             message: 'invalid email format'
         }

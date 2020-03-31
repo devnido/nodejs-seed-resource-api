@@ -1,16 +1,10 @@
-const bcrypt = require('bcryptjs');
-const config = require('../config/env');
+const bcrypt = require('bcryptjs')
 
-const service = {
+const service = ({ config }) => ({
 
     generateNewPassword: () => Math.random().toString(36).slice(-8),
 
-    comparePassword: (passwordUser, passwordDB) => {
-
-        return bcrypt.compareSync(passwordUser, passwordDB);
-
-
-    },
+    comparePassword: (passwordUser, passwordDB) => bcrypt.compareSync(passwordUser, passwordDB),
 
     hashPassword: (password) => {
 
@@ -21,6 +15,6 @@ const service = {
     }
 
 
-};
+})
 
-module.exports = service;
+module.exports = service

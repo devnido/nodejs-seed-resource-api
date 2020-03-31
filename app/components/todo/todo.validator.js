@@ -1,9 +1,9 @@
-const errorHandler = require('../../framework/middlewares/error-handler.middleware');
-const todoRepository = require('./todo.reposiroty');
+const errorHandler = require('../../framework/middlewares/error-handler.middleware')
+const todoRepository = require('./todo.repository')
 
-const { check, query, body, param, validationResult } = require('express-validator');
+const { check, query, body, param, validationResult } = require('express-validator')
 
-const validator = {
+const validator = ({ errorHandler, todoRepository }) => ({
 
     getAllPaginated: [
 
@@ -163,6 +163,6 @@ const validator = {
         errorHandler.validation(validationResult)
     ]
 
-};
+})
 
-module.exports = validator;
+module.exports = validator

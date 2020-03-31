@@ -1,11 +1,7 @@
-const errorHandler = require('../../framework/middlewares/error-handler.middleware');
-const userRepository = require('../users/user.repository');
-const userController = require('../users/user.controller');
-
-const { check, body, param, validationResult } = require('express-validator');
+const { check, body, param, validationResult } = require('express-validator')
 
 
-const validator = {
+const validator = ({ errorHandler, userRepository, userController }) => ({
 
     changePassword: [
         check(['idUser', 'currentPassword', 'newPassword', 'confirmNewPassword']).trim(),
@@ -26,7 +22,7 @@ const validator = {
                 })
                 .catch(err => {
 
-                    throw new Error('El usuario no existe');
+                    throw new Error('El usuario no existe')
                 })
         }),
 
@@ -48,7 +44,7 @@ const validator = {
                 })
                 .catch(err => {
 
-                    throw new Error('La contraseña actual es incorrecta');
+                    throw new Error('La contraseña actual es incorrecta')
                 })
         }),
 
@@ -63,9 +59,9 @@ const validator = {
         .custom((value, { req }) => {
             if (value !== req.body.confirmNewPassword) {
                 // trow error if passwords do not match
-                throw new Error("Nueva contraseña y Confirmar contraseña deben ser iguales");
+                throw new Error("Nueva contraseña y Confirmar contraseña deben ser iguales")
             } else {
-                return value;
+                return value
             }
         }),
         errorHandler.validation(validationResult)
@@ -91,7 +87,7 @@ const validator = {
                 })
                 .catch(err => {
 
-                    throw new Error('El usuario no existe');
+                    throw new Error('El usuario no existe')
                 })
         }),
 
@@ -116,14 +112,14 @@ const validator = {
         .custom((value, { req }) => {
             if (value !== req.uid) {
 
-                throw new Error("El usuario registrado no es el mismo que intentas modificar");
+                throw new Error("El usuario registrado no es el mismo que intentas modificar")
             } else {
-                return value;
+                return value
             }
         }),
         errorHandler.validation(validationResult)
     ]
 
-}
+})
 
-module.exports = validator;
+module.exports = validator

@@ -1,36 +1,31 @@
-const { getAllPaginated, getTotal, getById, getByRegex, insert, update } = require('./todo.reposiroty');
-const { app } = require('../../framework/config/env');
-
-const controller = {
+const controller = ({ config, todoRepository }) => ({
 
     getAllPaginated: async(page, idUser) => {
 
-        const limit = parseInt(app.todoPerPage);
-        const offset = parseInt((page - 1) * limit);
+        const limit = parseInt(config.app.todoPerPage)
+        const offset = parseInt((page - 1) * limit)
 
-        const todos = await getAllPaginated(idUser, limit, offset)
+        const [todos, total] = await Promise.all([todoRepository.getAllPaginated(idUser, limit, offset), todoRepository.getTotal(idUser)])
 
-        const total = await getTotal(idUser);
-
-        const totalPerPage = parseInt(todos.length);
-        let nextPage = 1;
+        const totalPerPage = parseInt(todos.length)
+        let nextPage = 1
 
         if (parseInt(totalPerPage + offset) <= parseInt(limit * page)) {
-            nextPage = Math.floor(parseInt(totalPerPage + offset) / parseInt(limit)) + 1;
+            nextPage = Math.floor(parseInt(totalPerPage + offset) / parseInt(limit)) + 1
         }
 
         return { todos, nextPage, total }
 
     },
-    get: (idUser, idTodo) => getById(idUser, idTodo),
+    get: (idUser, idTodo) => todoRepository.getById(idUser, idTodo),
 
     getByTerm: async(q, idUser) => {
 
-        const regex = new RegExp(q, 'i');
+        const regex = new RegExp(q, 'i')
 
-        const todos = await getByRegex(regex, idUser)
+        const todos = await todoRepository.getByRegex(regex, idUser)
 
-        const total = todos.length;
+        const total = todos.length
 
         return { total, todos }
     },
@@ -39,12 +34,12 @@ const controller = {
 
         const todoData = { name, status: 'pendiente', user: idUser }
 
-        return insert(todoData)
+        return todoRepository.insert(todoData)
     },
-    edit: (id, name, status, idUser) => update(id, name, status, idUser),
+    edit: (id, name, status, idUser) => todoRepository.update(id, name, status, idUser),
 
-    delete: (id) => delete(id)
+    delete: (id) => todoRepository.delete(id)
 
-};
+})
 
-module.exports = controller;
+module.exports = controller

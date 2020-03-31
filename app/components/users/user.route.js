@@ -1,8 +1,4 @@
-const userValidator = require('./user.validation');
-const userController = require('./user.controller');
-const authMiddleware = require('../../framework/middlewares/auth.middleware');
-
-const route = {
+const route = ({ authMiddleware, userValidator, userController, }) => ({
 
     init: (router) => {
 
@@ -12,11 +8,11 @@ const route = {
             userValidator.changePassword,
             async(req, res, next) => {
                 try {
-                    const { idUser } = req.params;
+                    const { idUser } = req.params
 
-                    const { newPassword } = req.body;
+                    const { newPassword } = req.body
 
-                    const resultUpdated = await userController.changePassword(idUser, newPassword);
+                    const resultUpdated = await userController.changePassword(idUser, newPassword)
 
                     if (resultUpdated) {
 
@@ -27,15 +23,15 @@ const route = {
                             }
                         }
 
-                        res.status(200).json(response);
+                        res.status(200).json(response)
                     } else {
                         next({
                             error: 'error en change password',
                             status: 500
-                        });
+                        })
                     }
                 } catch (error) {
-                    next(error);
+                    next(error)
                 }
             })
 
@@ -45,11 +41,11 @@ const route = {
             userValidator.changeUserInfo,
             async(req, res, next) => {
                 try {
-                    const { idUser } = req.params;
+                    const { idUser } = req.params
 
-                    const { name } = req.body;
+                    const { name } = req.body
 
-                    const userUpdated = await userController.changeUserInfo(idUser, name);
+                    const userUpdated = await userController.changeUserInfo(idUser, name)
 
                     if (userUpdated) {
 
@@ -61,15 +57,15 @@ const route = {
                             }
                         }
 
-                        res.status(200).json(response);
+                        res.status(200).json(response)
                     } else {
                         next({
                             error: 'error en user info',
                             status: 500
-                        });
+                        })
                     }
                 } catch (error) {
-                    next(error);
+                    next(error)
                 }
 
             })
@@ -79,6 +75,6 @@ const route = {
 
     }
 
-}
+})
 
 module.exports = route

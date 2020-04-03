@@ -1,6 +1,8 @@
-## Seed Resource Api Node.js
+# Seed Resource Api Node.js
 
-### Este proyecto fue creado para utilizar como base en futuros desarrollos que utilicen caracteristicas similares.
+![Continuous Integration Workflow](https://github.com/devnido/seed-resource-api-nodejs/workflows/Continuous%20Integration%20Workflow/badge.svg)
+
+## Este proyecto fue creado para utilizar como base en futuros desarrollos que utilicen caracteristicas similares.
 
 Proyecto base que forma parte de otros 2 adicionales para crear un sistema en conjunto. El código del repositorio actual es el back-end que sirve para levantar un servidor de recursos el cual tiene como función principal proporcionar el acceso y almacenamiento de datos a cualquier cliente que esté previamente autorizado. Para acceder a este servidor el cliente primero debe solicitar acceso al [servidor de autenticación](https://github.com/devnido/seed-auth-api-nodejs) el cual proporcionará un token de acceso con un tiempo de vida util. Adicionalmente se puede integrar con este [panel de administración](https://github.com/devnido/seed-admin-panel-angular)
 
@@ -22,6 +24,16 @@ Está desarrollado en [Node.js](https://nodejs.org/es/) versión v12.13.0 y [mon
 
 6. Para ejecutar el código puedes usar `npm run dev` para que se ejecute con nodemon
 
+## Tests
+
+El directiorio **/test** contiene integration tests y unit tests cada uno en su respectiva carpeta.
+
+Para ejecutar integration test es necesario tener el servicio de mongodb funcionando `mongod`
+
+Las variables para el entorno de testing estan definidas en el archivo **.env.testing** el cual es necesario para los test de integración
+
+Para ejecutar todos los tests `npm test`
+
 ## Funcionalidades implementadas 
 
 1. Validación de tokens de usuarios.
@@ -33,6 +45,6 @@ Está desarrollado en [Node.js](https://nodejs.org/es/) versión v12.13.0 y [mon
 7. Eliminar una tarea.
 8. Modificar nombre y contraseña en el perfil de usuario.
 
-## Documentación de la API y Tests
+## Documentación de la API 
 
 #### Proximamente...

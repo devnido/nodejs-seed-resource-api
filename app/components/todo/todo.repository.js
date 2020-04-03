@@ -2,7 +2,7 @@ const repository = ({ Todo }) => ({
 
     existsById: id => Todo.exists({ _id: id }),
 
-    existsByName: (name, user) => Todo.exists({ name, user }),
+    existsByNameAndUser: (name, user) => Todo.exists({ name, user }),
 
     existsByNameAndAnotherId: (idTodo, name) => Todo.exists({ name, _id: { $ne: idTodo } }),
 
@@ -16,7 +16,7 @@ const repository = ({ Todo }) => ({
 
     insert: ({ name, status, user }) => new Todo({ name, status, user }).save(),
 
-    update: (id, name, status, user) => Todo.findOneAndUpdate({ _id: id, user }, { name, status }, { new: true }),
+    update: ({ id, name, status, user }) => Todo.findOneAndUpdate({ _id: id, user }, { name, status }, { new: true }),
 
     delete: id => Todo.deleteOne({ _id: id })
 

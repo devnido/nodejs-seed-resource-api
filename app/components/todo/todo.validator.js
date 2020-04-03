@@ -57,7 +57,7 @@ const validator = ({ errorHandler, todoRepository }) => ({
             max: 50
         }).withMessage('Debe tener entre 2 y 50 caracteres')
         .custom((name) => {
-            return todoRepository.existsByName(name)
+            return todoRepository.existsByNameAndUser(name)
                 .then(todo => {
                     if (todo) {
                         return Promise.reject('El nombre ya existe')

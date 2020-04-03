@@ -36,7 +36,7 @@ const controller = ({ config, todoRepository }) => ({
 
         return todoRepository.insert(todoData)
     },
-    edit: (id, name, status, idUser) => todoRepository.update(id, name, status, idUser),
+    edit: (id, name, status, idUser) => todoRepository.update({ id, name, status, idUser }),
 
     delete: (id) => todoRepository.delete(id)
 

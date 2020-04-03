@@ -9,14 +9,9 @@ const user = process.env.DB_AUTH_USERNAME
 const pass = process.env.DB_AUTH_PASSWORD
 const database = process.env.DB_AUTH_DATABASE
 
-const connectionString = `${driver}://${host}:${port}/${database}`
+const string = `${driver}://${host}:${port}/${database}`
 
-mongoose.connection.on('error', err => {
-    console.log("el error de la conexion mongodb")
-    console.log(err)
-})
-
-const mongoOptions = {
+const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -24,10 +19,12 @@ const mongoOptions = {
 }
 
 if (user && pass) {
-    mongoOptions.auth = {
+    options.auth = {
         user: user,
         password: pass
     }
 }
 
-module.exports = mongoose.connect(connectionString, mongoOptions)
+const db = mongoose
+
+module.exports = { db, options, string }

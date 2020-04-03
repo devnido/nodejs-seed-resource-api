@@ -3,9 +3,9 @@ const middleware = ({ jwtService }) => ({
 
         try {
 
-            const bearer = req.headers['authorization']
+            const { authorization } = req.headers
 
-            const { idUser } = await jwtService.verifyAndDecode(bearer)
+            const { idUser } = await jwtService.verifyAndDecode(authorization)
 
             req.uid = idUser
 

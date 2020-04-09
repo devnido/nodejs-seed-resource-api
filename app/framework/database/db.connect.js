@@ -15,14 +15,8 @@ const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
-}
-
-if (user && pass) {
-    options.auth = {
-        user: user,
-        password: pass
-    }
+    useUnifiedTopology: true,
+    ...(user && password ? { auth: { user, password } } : {})
 }
 
 const db = mongoose

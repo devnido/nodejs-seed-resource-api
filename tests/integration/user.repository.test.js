@@ -9,12 +9,11 @@ const User = require('../../app/components/users/user.model')
 const userRepository = require('../../app/components/users/user.repository')
 const userMock = require('../mocks/user.mock')
 
-
 const repository = userRepository({ User })
 
-describe('Testing User Repository with Mongodb - Integration Tests', function() {
+describe('Testing User Repository with Mongodb - Integration Tests', function () {
 
-    before('database connect', function(done) {
+    before('database connect', function (done) {
 
         db.connect(string, options)
             .then(() => done())
@@ -22,7 +21,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
 
     })
 
-    beforeEach('populate collections', function(done) {
+    beforeEach('populate collections', function (done) {
 
         User.create(userMock)
             .then(result => done())
@@ -33,7 +32,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
 
     })
 
-    it("Should return true if todo exists by id", function(done) {
+    it("Should return true if todo exists by id", function (done) {
 
         repository.existsById("5e376c66ce68605aa0ed1141")
             .then(result => {
@@ -48,7 +47,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
             })
     })
 
-    it("Should return false if user does not exists by id", function(done) {
+    it("Should return false if user does not exists by id", function (done) {
 
         repository.existsById("5e376c66ce68605aa0ed1148")
             .then(result => {
@@ -63,7 +62,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
             })
     })
 
-    it("Should a user that include password field", function(done) {
+    it("Should a user that include password field", function (done) {
 
         repository.findByIdWithPassword("5e376c66ce68605aa0ed1141")
             .then(user => {
@@ -79,7 +78,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
             })
     })
 
-    it("Should modify the user setting new password", function(done) {
+    it("Should modify the user setting new password", function (done) {
 
         repository.setNewPassword("5e376c66ce68605aa0ed1141", "newpassword")
             .then(result => {
@@ -95,7 +94,7 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
             })
     })
 
-    it("Should modify the user setting new name", function(done) {
+    it("Should modify the user setting new name", function (done) {
 
         repository.setNewInfo("5e376c66ce68605aa0ed1141", "newname")
             .then(result => {
@@ -111,14 +110,14 @@ describe('Testing User Repository with Mongodb - Integration Tests', function() 
             })
     })
 
-    afterEach('clean articles collection', function(done) {
+    afterEach('clean articles collection', function (done) {
 
         User.deleteMany({})
             .then(result => done())
             .catch(err => done(err))
     })
 
-    after('database disconnect', function(done) {
+    after('database disconnect', function (done) {
 
         db.disconnect()
             .then(() => done())
